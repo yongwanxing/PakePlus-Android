@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' capacitor://localhost http://localhost https://localhost; style-src 'self' 'unsafe-inline'; img-src * data:; media-src * http: https:; script-src 'self'; connect-src * http: https:" />
+  <title>音乐下载助手</title>
+  <link rel="stylesheet" href="mobile.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-left">
+      <h1><font size="20" color="violet" face="仿宋">凉色音乐</font></h1>
+      <span class="subtitle">一款基于api的音乐播放和下载软件 · v1.2.6<span id="app-version"></span></span>
+    </div>
+    <span id="status-dot" class="status-dot" title="接口状态"></span>
+  </header>
+
+  <!-- 搜索区 -->
+  <section class="search-area">
+    <div class="search-row">
+      <input id="keyword" type="text" placeholder="输入歌曲名或 ID…" autocomplete="off" />
+      <button id="search-btn" class="primary">搜索</button>
+    </div>
+    <div class="filter-row">
+      <select id="platform">
+        <option value="aggregation" selected>聚合</option>
+        <option value="netease">网易云</option>
+        <option value="tencent">QQ音乐</option>
+      </select>
+      <select id="quality"></select>
+      <span id="result-count" class="result-count"></span>
+    </div>
+  </section>
+
+  <!-- 结果列表（卡片） -->
+  <main id="results">
+    <div id="empty-tip" class="empty-tip">输入关键词搜索歌曲 🎶</div>
+    <div id="loading-tip" class="empty-tip" style="display:none">⏳ 搜索中…</div>
+    <ul id="song-list" class="song-list"></ul>
+  </main>
+
+  <!-- 底部迷你播放器 -->
+  <footer id="mini-player" class="mini-player hidden">
+    <img id="mini-cover" class="mini-cover" src="" alt="封面" />
+    <div class="mini-info">
+      <div id="mini-title" class="mini-title">未在播放</div>
+      <div id="mini-artist" class="mini-artist"></div>
+    </div>
+    <div class="mini-controls">
+      <button id="btn-prev" class="mini-btn mini-btn-icon" title="上一首">
+        <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+      </button>
+      <button id="btn-play" class="mini-btn" title="播放/暂停">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <button id="btn-next" class="mini-btn mini-btn-icon" title="下一首">
+        <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+      </button>
+      <button id="btn-stop" class="mini-btn mini-btn-icon" title="停止">
+        <svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
+      </button>
+    </div>
+    <div class="mini-bottom">
+      <span class="mini-time" id="mini-cur">00:00</span>
+      <input id="mini-seek" class="mini-seek" type="range" min="0" max="1000" value="0" title="播放进度（可拖动）" />
+      <span class="mini-time" id="mini-dur">00:00</span>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast"></div>
+  <audio id="audio-player" preload="none"></audio>
+  <script src="mobile.js"></script>
+</body>
+</html>
