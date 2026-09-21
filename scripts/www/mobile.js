@@ -155,6 +155,9 @@ async function getRedirectUrl(url, timeout = 15000) {
     // 少数镜像直接把直链以纯文本返回
     const body = typeof res.data === 'string' ? res.data.trim() : '';
     if (res.status === 200 && /^https?:\/\//i.test(body)) return body;
+    // 部分镜像直接返回音频流（HTTP 200 + audio/*），此时中转地址本身即可播放
+    const ctype = String(h['Content-Type'] || h['content-type'] || '');
+    if (res.status < 400 && /audio|octet-stream|mpeg|mp3/i.test(ctype)) return url;
     return null;
   }
   // 浏览器 / Electron：读不到 Location，交给播放器跟随 302
