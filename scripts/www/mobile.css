@@ -1,0 +1,520 @@
+/* ===== iOS 26 Liquid Glass 风格 ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.65);
+  --glass-highlight: rgba(255, 255, 255, 0.85);
+  --ios-blue: #007aff;
+  --ios-blue2: #5856d6;
+  --ios-green: #34c759;
+  --ios-text: #1c1c1e;
+  --ios-secondary: #8e8e93;
+  --ios-system-gray-fill: rgba(118, 118, 128, 0.12);
+  --ios-system-gray-fill2: rgba(118, 118, 128, 0.16);
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, "SF Pro Text", "SF Pro Display", "Segoe UI", "Microsoft YaHei", sans-serif;
+  background:
+    radial-gradient(900px 700px at 80% -20%, rgba(0, 122, 255, 0.08), transparent 60%),
+    radial-gradient(700px 600px at -10% 10%, rgba(88, 86, 214, 0.07), transparent 55%),
+    linear-gradient(180deg, #f7f7f9 0%, #f0f0f4 100%);
+  background-attachment: fixed;
+  color: var(--ios-text);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: calc(76px + env(safe-area-inset-bottom));
+  user-select: none;
+  -webkit-user-select: none;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== 头部（iOS 大标题） ===== */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 22px 20px 10px;
+}
+
+.header-left h1 {
+  font-size: 31px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--ios-secondary);
+  display: block;
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--ios-system-gray-fill2);
+  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.08);
+  margin-bottom: 6px;
+  flex-shrink: 0;
+}
+
+.status-dot.online {
+  background: var(--ios-green);
+  box-shadow: 0 0 8px rgba(52, 199, 89, 0.5);
+}
+
+.status-dot.offline {
+  background: #ff3b30;
+  box-shadow: 0 0 8px rgba(255, 59, 48, 0.5);
+}
+
+/* ===== 搜索区（Liquid Glass 面板） ===== */
+.search-area {
+  background: var(--glass-bg);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  margin: 4px 14px;
+  padding: 14px;
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.3),
+    0 12px 40px rgba(0, 0, 0, 0.07);
+}
+
+.search-row {
+  display: flex;
+  gap: 9px;
+}
+
+#keyword {
+  flex: 1;
+  height: 44px;
+  padding: 0 16px;
+  font-size: 16px;
+  font-weight: 400;
+  border: none;
+  border-radius: 999px;
+  outline: none;
+  background: var(--ios-system-gray-fill);
+  color: var(--ios-text);
+  transition: background 0.2s;
+}
+
+#keyword:focus {
+  background: var(--ios-system-gray-fill2);
+}
+
+button.primary {
+  height: 44px;
+  padding: 0 22px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 999px;
+  color: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #0a84ff, #5e5ce6);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 6px 18px rgba(10, 132, 255, 0.35);
+}
+
+button.primary:active {
+  transform: scale(0.96);
+  opacity: 0.92;
+}
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 11px;
+}
+
+.filter-row select {
+  height: 40px;
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  border-radius: 999px;
+  outline: none;
+  background: var(--ios-system-gray-fill);
+  color: var(--ios-text);
+  flex: 1;
+  max-width: 46%;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.result-count {
+  font-size: 13px;
+  color: var(--ios-secondary);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* ===== 结果列表（Liquid Glass 卡片） ===== */
+#results {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 14px 10px;
+}
+
+.empty-tip {
+  text-align: center;
+  color: var(--ios-secondary);
+  padding: 70px 24px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.song-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.song-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 13px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 13px;
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.3),
+    0 10px 30px rgba(0, 0, 0, 0.06);
+  transition: transform 0.18s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.song-card:active {
+  transform: scale(0.975);
+}
+
+.song-card.playing {
+  border-color: rgba(10, 132, 255, 0.55);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 0 0 1.5px rgba(10, 132, 255, 0.45),
+    0 10px 34px rgba(10, 132, 255, 0.16);
+}
+
+.song-cover {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  object-fit: cover;
+  background: var(--ios-system-gray-fill);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 5px 14px rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
+}
+
+.song-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.song-name {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.song-meta {
+  font-size: 13px;
+  color: var(--ios-secondary);
+  margin-top: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.song-tags {
+  display: flex;
+  gap: 7px;
+  margin-top: 6px;
+  align-items: center;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.badge-netease {
+  background: rgba(10, 132, 255, 0.14);
+  color: #0a84ff;
+}
+
+.badge-tencent {
+  background: rgba(255, 149, 0, 0.16);
+  color: #ff9500;
+}
+
+.song-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.song-actions button {
+  width: 62px;
+  height: 32px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.btn-play {
+  background: linear-gradient(135deg, #0a84ff, #5e5ce6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 4px 12px rgba(10, 132, 255, 0.3);
+}
+
+.btn-play:active { transform: scale(0.93); }
+
+.btn-download {
+  background: linear-gradient(135deg, #34c759, #30b0c7);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 4px 12px rgba(52, 199, 89, 0.3);
+}
+
+.btn-download:active { transform: scale(0.93); }
+
+/* ===== 下载进度条（歌曲卡片底部） ===== */
+.dl-progress {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.dl-progress-bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.dl-progress-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #0a84ff, #5e5ce6);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.dl-progress-text {
+  font-size: 11px;
+  color: var(--ios-secondary);
+  min-width: 34px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== 底部迷你播放器（iOS Music Now Playing 液态玻璃） ===== */
+.mini-player {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(10px + env(safe-area-inset-bottom));
+  background: rgba(30, 30, 38, 0.55);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 22px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.12),
+    0 16px 44px rgba(0, 0, 0, 0.32);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 13px;
+  z-index: 900;
+  overflow: hidden;
+  color: #fff;
+}
+
+.mini-player.hidden {
+  display: none;
+}
+
+.mini-cover {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 6px 16px rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
+}
+
+.mini-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.mini-title {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mini-artist {
+  font-size: 12px;
+  color: rgba(235, 235, 245, 0.72);
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mini-bottom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 100%;
+  margin-top: 2px;
+}
+
+.mini-time {
+  font-size: 11px;
+  color: rgba(235, 235, 245, 0.7);
+  font-variant-numeric: tabular-nums;
+  min-width: 36px;
+  text-align: center;
+}
+
+.mini-seek {
+  flex: 1;
+  height: 3px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+}
+
+.mini-seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #fff;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.mini-btn {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(8px);
+}
+
+.mini-btn:active { transform: scale(0.9); }
+
+.mini-btn.secondary {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.mini-controls {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.mini-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+  display: block;
+}
+
+.mini-btn-icon {
+  width: 34px;
+  height: 34px;
+}
+
+/* ===== Toast（iOS 风格） ===== */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 130px;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(28, 28, 30, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: #fff;
+  padding: 11px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  z-index: 999;
+  max-width: 80vw;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
